@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="iiits_robot.robocontrol" >
+
+    <uses-permission android:name="android.permission.CALL_PHONE"></uses-permission>
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"></uses-permission>
+    <uses-permission android:name="android.permission.BLUETOOTH"></uses-permission>
+    <uses-permission android:name="android.permission.RECORD_AUDIO"></uses-permission>
+    <uses-permission android:name="android.permission.INTERNET" ></uses-permission>
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name=".LoginActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/title_activity_main"
+            android:parentActivityName=".LoginActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="iiits_robot.robocontrol.LoginActivity" />
+        </activity>
+        <activity
+            android:name=".dtmf"
+            android:label="@string/title_activity_dtmf"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="iiits_robot.robocontrol.MainActivity" />
+        </activity>
+        <activity
+            android:name=".remote_control"
+            android:label="@string/title_activity_remote_control"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="iiits_robot.robocontrol.MainActivity" />
+        </activity>
+        <activity
+            android:name=".voice_recognition"
+            android:label="@string/title_activity_voice_recognition"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="iiits_robot.robocontrol.MainActivity" />
+        </activity>
+        <activity
+            android:name=".tilt_control"
+            android:label="@string/title_activity_tilt_control"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="landscape">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="iiits_robot.robocontrol.MainActivity" />
+        </activity>
+        <activity
+            android:name=".gesture_control"
+            android:label="@string/title_activity_gesture_control"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="iiits_robot.robocontrol.MainActivity" />
+        </activity>
+    </application>
+
+</manifest>
