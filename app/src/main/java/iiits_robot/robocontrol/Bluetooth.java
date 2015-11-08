@@ -73,7 +73,7 @@ public class Bluetooth {
     public Bluetooth(Context context, Handler handler) {
         mAdapter = BluetoothAdapter.getDefaultAdapter();
         if (D) for (BluetoothDevice bd : mAdapter.getBondedDevices())
-            Log.d(TAG, "Bounded device " + bd);
+            //Log.d(TAG, "Bounded device " + bd);
         mState = STATE_NONE;
         mHandler = handler;
     }
@@ -85,7 +85,7 @@ public class Bluetooth {
      */
     private synchronized void setState(int state) {
         if (D)
-            Log.d(TAG, "setState() " + mState + " -> " + state);
+            //Log.d(TAG, "setState() " + mState + " -> " + state);
         mState = state;
 // Give the new state to the Handler so the UI Activity can update
         mHandler.obtainMessage(MESSAGE_STATE_CHANGE, state, -1)
@@ -105,7 +105,7 @@ public class Bluetooth {
      */
     public synchronized void start() {
         if (D)
-            Log.d(TAG, "start");
+            //Log.d(TAG, "start");
 // Cancel any thread attempting to make a connection
         if (mConnectThread != null) {
             mConnectThread.cancel();
@@ -146,7 +146,7 @@ public class Bluetooth {
      */
     private synchronized void connect(BluetoothDevice device) {
         if (D)
-            Log.d(TAG, "connect to: " + device);
+            //Log.d(TAG, "connect to: " + device);
 // Cancel any thread attempting to make a connection
         if (mState == STATE_CONNECTING) {
             if (mConnectThread != null) {
@@ -174,7 +174,7 @@ public class Bluetooth {
     public synchronized void connected(BluetoothSocket socket,
                                        BluetoothDevice device, final String socketType) {
         if (D)
-            Log.d(TAG, "connected, Socket Type:" + socketType);
+            //Log.d(TAG, "connected, Socket Type:" + socketType);
 // Cancel the thread that completed the connection
         if (mConnectThread != null) {
             mConnectThread.cancel();
@@ -208,7 +208,7 @@ public class Bluetooth {
      */
     public synchronized void stop() {
         if (D)
-            Log.d(TAG, "stop");
+            //Log.d(TAG, "stop");
         if (mConnectThread != null) {
             mConnectThread.cancel();
             mConnectThread = null;
@@ -293,8 +293,8 @@ public class Bluetooth {
 
         public void run() {
             if (D)
-                Log.d(TAG, "Socket Type: " + mSocketType
-                        + "BEGIN mAcceptThread" + this);
+                //Log.d(TAG, "Socket Type: " + mSocketType
+                 //       + "BEGIN mAcceptThread" + this);
             setName("AcceptThread" + mSocketType);
             BluetoothSocket socket = null;
 // Listen to the server socket if we're not connected
@@ -338,7 +338,7 @@ public class Bluetooth {
 
         public void cancel() {
             if (D)
-                Log.d(TAG, "Socket Type" + mSocketType + "cancel " + this);
+                //Log.d(TAG, "Socket Type" + mSocketType + "cancel " + this);
             try {
                 mmServerSocket.close();
             } catch (IOException e) {
@@ -421,7 +421,7 @@ public class Bluetooth {
         private final OutputStream mmOutStream;
 
         public ConnectedThread(BluetoothSocket socket, String socketType) {
-            Log.d(TAG, "create ConnectedThread: " + socketType);
+            //Log.d(TAG, "create ConnectedThread: " + socketType);
             mmSocket = socket;
             InputStream tmpIn = null;
             OutputStream tmpOut = null;
@@ -445,9 +445,9 @@ public class Bluetooth {
                 try {
 // Read from the InputStream
                     bytes = mmInStream.read(buffer);
-                    Log.d(TAG, "message bytes " + bytes);
-                    Log.d(TAG, "message string bytes " + String.valueOf(bytes));
-                    Log.d(TAG, "message buffer " + new String(buffer));
+                    //Log.d(TAG, "message bytes " + bytes);
+                    //Log.d(TAG, "message string bytes " + String.valueOf(bytes));
+                    //Log.d(TAG, "message buffer " + new String(buffer));
 // Send the obtained bytes to the UI Activity
                     mHandler.obtainMessage(MESSAGE_READ, bytes,
                             -1, buffer).sendToTarget();

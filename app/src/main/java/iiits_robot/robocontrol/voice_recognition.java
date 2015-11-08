@@ -30,6 +30,7 @@ public class voice_recognition extends ActionBarActivity {
     private final int REQ_CODE_SPEECH_INPUT = 100;
     private Bluetooth bt;
     private String TAG="voice_recognition";
+    int commandid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +39,7 @@ public class voice_recognition extends ActionBarActivity {
 
         txtSpeechInput = (TextView) findViewById(R.id.txtSpeechInput);
         btnSpeak = (ImageButton) findViewById(R.id.btnSpeak);
+        commandid=0;
 
         // hide the action bar
         //getActionBar().hide();
@@ -58,6 +60,7 @@ public class voice_recognition extends ActionBarActivity {
      * Showing google speech input dialog
      * */
     private void promptSpeechInput() {
+        Log.d( TAG,Integer.toString(commandid+1)+"prompt_speech");
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
                 RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
@@ -96,11 +99,13 @@ public class voice_recognition extends ActionBarActivity {
                     }*/
                     y=result.get(0);
                     txtSpeechInput.setText(y);
-                    bt.sendMessage(y);
-                    Log.d("voice",y);
+                    commandid++;
+                    Log.d(TAG,Integer.toString(commandid));
+                    bt.sendMessage(commandid+" "+y);
+                    //Log.d("voice",y);
 
                     if(bt.getState()==3) {
-                        Log.d("hhjj","state");
+                        //Log.d("hhjj","state");
 
                         if(y.indexOf("disconnect")>=0) {
                             bt.disconnect();
@@ -164,7 +169,7 @@ public class voice_recognition extends ActionBarActivity {
                     bt.connectDevice("raspberrypi-0");
                     t = Toast.makeText(getApplicationContext(), "Btservice started - listening", Toast.LENGTH_SHORT);
                     t.show();
-                    Log.d(TAG, "Btservice started - listening");
+                    //Log.d(TAG, "Btservice started - listening");
                 }
                 //status.setText("Connected");
             } else {
@@ -187,19 +192,19 @@ public class voice_recognition extends ActionBarActivity {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case Bluetooth.MESSAGE_STATE_CHANGE:
-                    Log.d(TAG, "MESSAGE_STATE_CHANGE: " + msg.arg1);
+                    //Log.d(TAG, "MESSAGE_STATE_CHANGE: " + msg.arg1);
                     break;
                 case Bluetooth.MESSAGE_WRITE:
-                    Log.d(TAG, "MESSAGE_WRITE ");
+                    //Log.d(TAG, "MESSAGE_WRITE ");
                     break;
                 case Bluetooth.MESSAGE_READ:
-                    Log.d(TAG, "MESSAGE_READ ");
+                    //Log.d(TAG, "MESSAGE_READ ");
                     break;
                 case Bluetooth.MESSAGE_DEVICE_NAME:
-                    Log.d(TAG, "MESSAGE_DEVICE_NAME " + msg);
+                    //Log.d(TAG, "MESSAGE_DEVICE_NAME " + msg);
                     break;
                 case Bluetooth.MESSAGE_TOAST:
-                    Log.d(TAG, "MESSAGE_TOAST " + msg);
+                    //Log.d(TAG, "MESSAGE_TOAST " + msg);
                     break;
             }
         }

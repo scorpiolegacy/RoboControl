@@ -35,6 +35,7 @@ public class tilt_control extends ActionBarActivity implements SensorEventListen
     Button dis;
     int calibration_status=0;
     float calx=0f,caly=0f,calz=0f,noise_factorx=2.5f,noise_factory=2.0f;
+    int commandid;
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -69,6 +70,7 @@ public class tilt_control extends ActionBarActivity implements SensorEventListen
             @Override
             public void onClick(View v) {
                 calibration_status = 1;
+                commandid=0;
             }
         });
 
@@ -107,7 +109,10 @@ public class tilt_control extends ActionBarActivity implements SensorEventListen
     public void onSensorChanged(SensorEvent event){
 
         // check sensor type
+
         if(event.sensor.getType()==Sensor.TYPE_ACCELEROMETER){
+
+            //Log.d(TAG,Integer.toString(commandid)+" Tilt Time");
 
             float x = event.values[0];
             float y = event.values[1];
@@ -132,13 +137,17 @@ public class tilt_control extends ActionBarActivity implements SensorEventListen
                 if(fx==1 && fy==0) {
                     if (deltax > 0) {
                         //move backward
-                        bt.sendMessage("6");
+                        commandid++;
+                        Log.d(TAG,Integer.toString(commandid));
+                        bt.sendMessage(commandid+" 6");
                        // Toast.makeText(getApplicationContext(), "Backward", Toast.LENGTH_SHORT).show();
                         orientation.setText("Backward");
 
                     } else {
                         //move forward
-                        bt.sendMessage("2");
+                        commandid++;
+                        Log.d(TAG,Integer.toString(commandid));
+                        bt.sendMessage(commandid+" 2");
                         //Toast.makeText(getApplicationContext(), "Forward", Toast.LENGTH_SHORT).show();
                         orientation.setText("Forward");
                     }
@@ -146,13 +155,17 @@ public class tilt_control extends ActionBarActivity implements SensorEventListen
                 else if(fy==1 && fx==0) {
                     if (deltay > 0) {
                         //turn left right
-                        bt.sendMessage("0");
+                        commandid++;
+                        Log.d(TAG,Integer.toString(commandid));
+                        bt.sendMessage(commandid+" 0");
                         //Toast.makeText(getApplicationContext(), "Left Fast", Toast.LENGTH_SHORT).show();
                         orientation.setText("Left Right");
 
                     } else {
                         //turn left fast
-                        bt.sendMessage("4");
+                        commandid++;
+                        Log.d(TAG,Integer.toString(commandid));
+                        bt.sendMessage(commandid+" 4");
                         //Toast.makeText(getApplicationContext(), "Left Fast", Toast.LENGTH_SHORT).show();
                         orientation.setText("Left Fast");
 
@@ -163,28 +176,36 @@ public class tilt_control extends ActionBarActivity implements SensorEventListen
                     if(deltax>0 && deltay>0)
                     {
                         //backwards right
-                        bt.sendMessage("7");
+                        commandid++;
+                        Log.d(TAG,Integer.toString(commandid));
+                        bt.sendMessage(commandid+" 7");
                         //Toast.makeText(getApplicationContext(), "Backwards right", Toast.LENGTH_SHORT).show();
                         orientation.setText("Backwards right");
                     }
                     else if(deltax>0 && deltay<0)
                     {
                         //backwards left
-                        bt.sendMessage("5");
+                        commandid++;
+                        Log.d(TAG,Integer.toString(commandid));
+                        bt.sendMessage(commandid+" 5");
                         //Toast.makeText(getApplicationContext(), "Backwards left", Toast.LENGTH_SHORT).show();
                         orientation.setText("Backwards left");
                     }
                     else if(deltay<0)
                     {
                         //forwards left
-                        bt.sendMessage("3");
+                        commandid++;
+                        Log.d(TAG,Integer.toString(commandid));
+                        bt.sendMessage(commandid+" 3");
                         //Toast.makeText(getApplicationContext(), "Forwards left", Toast.LENGTH_SHORT).show();
                         orientation.setText("Forwards left");
                     }
                     else
                     {
                         //forwards right
-                        bt.sendMessage("1");
+                        commandid++;
+                        Log.d(TAG,Integer.toString(commandid));
+                        bt.sendMessage(commandid+" 1");
                         //Toast.makeText(getApplicationContext(), "Forwards right", Toast.LENGTH_SHORT).show();
                         orientation.setText("Forwards right");
                     }
@@ -193,7 +214,9 @@ public class tilt_control extends ActionBarActivity implements SensorEventListen
                 else
                 {
                     //stop
-                    bt.sendMessage("8");
+                    commandid++;
+                    Log.d(TAG,Integer.toString(commandid));
+                    bt.sendMessage(commandid+" 8");
                     orientation.setText("Stop");
                 }
 
@@ -223,13 +246,13 @@ public class tilt_control extends ActionBarActivity implements SensorEventListen
                     bt.connectDevice("raspberrypi-0");
                     t = Toast.makeText(getApplicationContext(), "Btservice started - listening", Toast.LENGTH_SHORT);
                     t.show();
-                    Log.d(TAG, "Btservice started - listening");
+                    //Log.d(TAG, "Btservice started - listening");
                 }
                 //status.setText("Connected");
             } else {
                 t=Toast.makeText(getApplicationContext(),"Bluetooth not enabled",Toast.LENGTH_SHORT);
                 t.show();
-                Log.w(TAG, "Btservice started - bluetooth is not enabled");
+                //Log.w(TAG, "Btservice started - bluetooth is not enabled");
                 //status.setText("Bluetooth Not enabled");
             }
         } catch (Exception e) {
@@ -246,19 +269,19 @@ public class tilt_control extends ActionBarActivity implements SensorEventListen
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case Bluetooth.MESSAGE_STATE_CHANGE:
-                    Log.d(TAG, "MESSAGE_STATE_CHANGE: " + msg.arg1);
+                    //Log.d(TAG, "MESSAGE_STATE_CHANGE: " + msg.arg1);
                     break;
                 case Bluetooth.MESSAGE_WRITE:
-                    Log.d(TAG, "MESSAGE_WRITE ");
+                    //Log.d(TAG, "MESSAGE_WRITE ");
                     break;
                 case Bluetooth.MESSAGE_READ:
-                    Log.d(TAG, "MESSAGE_READ ");
+                    //Log.d(TAG, "MESSAGE_READ ");
                     break;
                 case Bluetooth.MESSAGE_DEVICE_NAME:
-                    Log.d(TAG, "MESSAGE_DEVICE_NAME " + msg);
+                    //Log.d(TAG, "MESSAGE_DEVICE_NAME " + msg);
                     break;
                 case Bluetooth.MESSAGE_TOAST:
-                    Log.d(TAG, "MESSAGE_TOAST " + msg);
+                    //Log.d(TAG, "MESSAGE_TOAST " + msg);
                     break;
             }
         }

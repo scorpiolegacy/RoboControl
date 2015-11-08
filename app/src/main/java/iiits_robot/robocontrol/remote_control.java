@@ -125,7 +125,7 @@ public class remote_control extends ActionBarActivity {
                     bt.connectDevice("raspberrypi-0");
                     t = Toast.makeText(getApplicationContext(), "Btservice started - listening", Toast.LENGTH_SHORT);
                     t.show();
-                    Log.d(TAG, "Btservice started - listening");
+                    //Log.d(TAG, "Btservice started - listening");
                 }
                 //status.setText("Connected");
             } else {
@@ -147,19 +147,19 @@ public class remote_control extends ActionBarActivity {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case Bluetooth.MESSAGE_STATE_CHANGE:
-                    Log.d(TAG, "MESSAGE_STATE_CHANGE: " + msg.arg1);
+                    //Log.d(TAG, "MESSAGE_STATE_CHANGE: " + msg.arg1);
                     break;
                 case Bluetooth.MESSAGE_WRITE:
-                    Log.d(TAG, "MESSAGE_WRITE ");
+                    //Log.d(TAG, "MESSAGE_WRITE ");
                     break;
                 case Bluetooth.MESSAGE_READ:
-                    Log.d(TAG, "MESSAGE_READ ");
+                    //Log.d(TAG, "MESSAGE_READ ");
                     break;
                 case Bluetooth.MESSAGE_DEVICE_NAME:
-                    Log.d(TAG, "MESSAGE_DEVICE_NAME " + msg);
+                    //Log.d(TAG, "MESSAGE_DEVICE_NAME " + msg);
                     break;
                 case Bluetooth.MESSAGE_TOAST:
-                    Log.d(TAG, "MESSAGE_TOAST " + msg);
+                    //Log.d(TAG, "MESSAGE_TOAST " + msg);
                     break;
             }
         }
@@ -171,6 +171,8 @@ public class remote_control extends ActionBarActivity {
 
         @Override
         public boolean onTouch(View v, MotionEvent event) {
+
+            Log.d(TAG,Integer.toString(commandid + 1)+" Touch Time");
 
             double x=event.getX();
             double y=event.getY();
@@ -203,40 +205,48 @@ public class remote_control extends ActionBarActivity {
                 {
                     case 0:
                         commandid++;
-                        Log.d(TAG," angle "+x+" "+y+" "+angle+" "+ commandid);
+                        Log.d(TAG,Integer.toString(commandid));
                         bt.sendMessage(commandid+" "+"0");
                         break;
                     case 1:
-                        Log.d(TAG, " angle " + x + " " + y + " " + angle+" "+ commandid);
+                        commandid++;
+                        Log.d(TAG,Integer.toString(commandid));
                         bt.sendMessage(commandid+" "+"1");
                         break;
                     case 2:
-                        Log.d(TAG," angle "+x+" "+y+" "+angle+" "+ commandid);
-                        bt.sendMessage("2");
+                        commandid++;
+                        Log.d(TAG,Integer.toString(commandid));
+                        bt.sendMessage(commandid+" "+"2");
                         break;
                     case 3:
-                        Log.d(TAG," angle "+x+" "+y+" "+angle+" "+ commandid);
-                        bt.sendMessage("3");
+                        commandid++;
+                        Log.d(TAG,Integer.toString(commandid));
+                        bt.sendMessage(commandid+" "+"3");
                         break;
                     case 4:
-                        Log.d(TAG," angle "+x+" "+y+" "+angle+" "+ commandid);
-                        bt.sendMessage("4");
+                        commandid++;
+                        Log.d(TAG,Integer.toString(commandid));
+                        bt.sendMessage(commandid+" "+"4");
                         break;
                     case 5:
-                        Log.d(TAG," angle "+x+" "+y+" "+angle+" "+ commandid);
-                        bt.sendMessage("5");
+                        commandid++;
+                        Log.d(TAG,Integer.toString(commandid));
+                        bt.sendMessage(commandid+" "+"5");
                         break;
                     case 6:
-                        Log.d(TAG," angle "+x+" "+y+" "+angle+" "+ commandid);
-                        bt.sendMessage("6");
+                        commandid++;
+                        Log.d(TAG,Integer.toString(commandid));
+                        bt.sendMessage(commandid+" "+"6");
                         break;
                     case 7:
-                        Log.d(TAG," angle "+x+" "+y+" "+angle+" "+ commandid);
-                        bt.sendMessage("7");
+                        commandid++;
+                        Log.d(TAG,Integer.toString(commandid));
+                        bt.sendMessage(commandid+" "+"7");
                         break;
                     case 8:
-                        Log.d(TAG," angle "+x+" "+y+" "+angle+" "+ commandid);
-                        bt.sendMessage("8");
+                        commandid++;
+                        Log.d(TAG,Integer.toString(commandid));
+                        bt.sendMessage(commandid+" "+"8");
                         break;
 
                 }
